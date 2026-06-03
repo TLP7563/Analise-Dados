@@ -58,22 +58,22 @@ if mes_selecionado != "Todos":
 else:
     df_filtrado = df
 
-    st.markdown("Visão Geral das Vendas")
-    col1, col2, col3 = st.columns(3)
+st.markdown("Visão Geral das Vendas")
+col1, col2, col3 = st.columns(3)
 
-    faturamento_total = df_filtrado['Valor_Total'].sum()
-    ticket_medio = df_filtrado['Valor_Total'].mean()
-    total_vendas = len(df_filtrado)
+faturamento_total = df_filtrado['Valor_Total'].sum()
+ticket_medio = df_filtrado['Valor_Total'].mean()
+total_vendas = len(df_filtrado)
 
-    col1.metric("Faturamento Total", f"R$ {faturamento_total:,.2f}")
-    col2.metric("Ticket Médio", f"R$ {ticket_medio:,.2f}")
-    col3.metric("Total de Vendas", f"{total_vendas}")
+col1.metric("Faturamento Total", f"R$ {faturamento_total:,.2f}")
+col2.metric("Ticket Médio", f"R$ {ticket_medio:,.2f}")
+col3.metric("Total de Vendas", f"{total_vendas}")
 
-    st.divider()
+st.divider()
 
-    col_esquerda, col_direita = st.columns(2)
+col_esquerda, col_direita = st.columns(2)
 
-    with col_esquerda:
+with col_esquerda:
         st.markdown("Top 10 Produtos Mais Vendidos")
         top_produtos = df_filtrado.groupby('Produto')['Valor_Total'].sum().reset_index()
         top_produtos = top_produtos.sort_values('Valor_Total', ascending=False).head(10)
