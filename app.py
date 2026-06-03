@@ -48,7 +48,7 @@ df = carregar_dados()
 st.sidebar.image("https://cdn-icons-png.claticon.com/512/2800/2800118.png",width=100)
 st.sidebar.header("Filtros de Análise")
 
-with st.sidear.form("filtros_form"):
+with st.sidebar.form("filtros_form"):
     meses = ["Todos"] + list(df['Mes_Ano'].unique())
     mes_selecionado = st.selectbox("Selecione o Mês/Ano", meses)
     btn_pesquisar = st.form_submit_button("Aplicar Filtro", use_container_width=True)
