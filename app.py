@@ -15,7 +15,24 @@ st.markdown("""
             </style>
             """, unsafe_allow_html=True)
 
-st.title("Análise de Vendas - JMartins")
+st.markdown("""
+            <style>
+            .titulo-centralizado {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margim-bottom: 2rem;
+            color: #E6F1FF;
+            }
+            div[data-testid="metric-container"] {
+            background-color: #112240;
+            border: 1px solid #233554;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            }
+            </style>
+            """, unsafe_allow_html=True)
+st.markdown('<h1 class="titulo-centralizado">Análise de Vendas - JMartins</h1>', unsafe_allow_html=True)
 
 @st.cache_data
 def carregar_dados():
@@ -23,6 +40,7 @@ def carregar_dados():
     df['Data_Hora'] = pd.to_datetime(df['Data_Hora'])
     df['Mes_Ano'] = df['Data_Hora'].dt.strftime('%m/%Y ')
     df['Hora'] = df['Data_Hora'].dt.hour
+    df = df[df['Mes_Ano'] != '06/2026']
     return df
 
 df = carregar_dados()
@@ -30,8 +48,10 @@ df = carregar_dados()
 st.sidebar.image("https://cdn-icons-png.claticon.com/512/2800/2800118.png",width=100)
 st.sidebar.header("Filtros de Análise")
 
-meses = ["Todos"] + df['Mes_Ano'].unique().tolist()
-mes_selecionado = st.sidebar.selectbox("Selecione o Mês/Ano", meses)
+with st.sidear.form("filtros_form"):
+    meses = ["Todos"] + list(df['Mes_Ano'].unique())
+    mes_selecionado = st.selectbox("Selecione o Mês/Ano", meses)
+    btn_pesquisar = st.form_submit_button("Aplicar Filtro", use_container_width=True)
 
 if mes_selecionado != "Todos":
     df_filtrado = df[df['Mes_Ano'] == mes_selecionado]
